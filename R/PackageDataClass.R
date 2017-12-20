@@ -1,4 +1,3 @@
-#' @import two.laws.big.bang
 NULL
 
 #' PackageDataClass
@@ -16,13 +15,13 @@ PackageDataClass <- R6::R6Class(
 
     GetHtmlTable = function(url, indexTable = 1, colNames = NA_character_){
 
-      Page <- read_html("https://www.ssa.gov/oact/babynames/numberUSbirths.html")
+      Page <- xml2::read_html("https://www.ssa.gov/oact/babynames/numberUSbirths.html")
 
       HtmlTable <- Page %>%
-        html_nodes("table") %>%
+        rvest::html_nodes("table") %>%
         .[[indexTable]] %>%
-        html_table() %>%
-        tbl_df()
+        rvest::html_table() %>%
+        tibble::as_tibble()
 
       if (!all(is.na(colNames))){
         names(HtmlTable) <- colNames
@@ -46,12 +45,12 @@ PackageDataClass <- R6::R6Class(
     initialize = function(
       cacheFolder = NA
     ){
-      library(dplyr, warn.conflicts = FALSE)
-      library(reshape2)
-      library(tidyr)
-      library(readr)
-      library(tidyverse)
-      library(rvest)
+      # library(dplyr, warn.conflicts = FALSE)
+      # library(reshape2)
+      # library(tidyr)
+      # library(readr)
+      # library(tidyverse)
+      # library(rvest)
 
 
       if (!is.na(cacheFolder)){
